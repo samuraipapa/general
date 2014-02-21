@@ -9,8 +9,7 @@
 #import "MyScene.h"
 
 @implementation MyScene{
-//    NSMutableArray* touchDrawArray;
-//    NSMutableArray* touchDrawArrayAllOfThem;
+
     SKSpriteNode *squareBig1;
     SKSpriteNode *squareBig2;
     SKSpriteNode *smallSquare;
@@ -29,7 +28,6 @@
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
-        /* Setup your scene here */
  
         [self createSceneContents];
 //        touchDrawArrayAllOfThem = [@[[NSValue valueWithCGPoint:CGPointMake(0, 0)]] mutableCopy];
@@ -53,21 +51,16 @@
 
 
 
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    /* Called when a touch begins */
-    
+ 
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
-        
         NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
-
         [self drawBigSquare1InLocation:location];
-        
-      //  touchDrawArray  = [@[[NSValue valueWithCGPoint:location]] mutableCopy];
-      
-        
     }
 }
+
 
 -(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     
@@ -75,17 +68,7 @@
         CGPoint location = [touch locationInNode:self];
      
         [self drawSmallSquareInLocation:location];
-        
-    //    [touchDrawArray addObject:[NSValue valueWithCGPoint:location]];
-    //    [touchDrawArrayAllOfThem addObject:[NSValue valueWithCGPoint:location]];
-        
-        
-        
-   //     NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
-   //     [self drawSmallSquareInLocation:location];
-        
     }
-
 }
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event  {
@@ -93,20 +76,30 @@
     for (UITouch* touch in touches) {
         CGPoint location = [touch locationInNode:self];
        [self drawBigSquare2InLocation:location];
+        [self drawJointToBigSquares];
     }
 
 }
 
+
+
 -(void) drawBigSquare1InLocation: (CGPoint) location{
     squareBig1 = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(50, 50)];
-    [smallSquare setPosition:location];
-    [self addChild:smallSquare];
+    [squareBig1 setPosition:location];
+    squareBig1.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:squareBig1.size];
+    [self addChild:squareBig1];
 }
 
 -(void) drawBigSquare2InLocation: (CGPoint) location{
     squareBig2 = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(50, 50)];
-    [smallSquare setPosition:location];
-    [self addChild:smallSquare];
+    [squareBig2 setPosition:location];
+    squareBig2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:squareBig2.size];
+
+    [self addChild:squareBig2];
+    
+    myJointLimit = [SKPhysicsJointLimit jointWithBodyA:squareBig1.physicsBody bodyB:squareBig2.physicsBody anchorA:squareBig1.position anchorB:squareBig2.position  ];
+    
+    [self.physicsWorld addJoint:myJointLimit];
 }
 
 
@@ -118,32 +111,26 @@
 }
 
 
--(void) drawSmallJointedSquareInLocation: (CGPoint) location{
-    smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(5, 5)];
-    [smallSquare setPosition:location];
-    [smallSquare setName:@"squareName"];
-    smallSquare.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:smallSquare.size];
-    
-    
-    
-//    SKPhysicsJointLimit * myJointLimit = [SKPhysicsJointLimit jointWithBodyA: bodyB:<#(SKPhysicsBody *)#> anchorA:<#(CGPoint)#> anchorB:<#(CGPoint)#>
-    [self addChild:smallSquare];
+-(void) drawJointToBigSquares{
+
+ 
+ //   [self addChild:smallSquare];
 }
 
 -(void)didSimulatePhysics
 {
     [self enumerateChildNodesWithName:@"squareName" usingBlock:^(SKNode *node, BOOL *stop) {
-//        if (node.position.y < 0){
+////        if (node.position.y < 0){
+////            [node removeFromParent];
+////        }
+//    //    NSLog(@"%i",[touchDrawArray count]);
+//        NSLog(@"%i",[touchDrawArrayAllOfThem count]);
+//        
+//        if ([touchDrawArrayAllOfThem count]  > 50) {
 //            [node removeFromParent];
+//            [touchDrawArrayAllOfThem removeAllObjects];
 //        }
-    //    NSLog(@"%i",[touchDrawArray count]);
-        NSLog(@"%i",[touchDrawArrayAllOfThem count]);
-        
-        if ([touchDrawArrayAllOfThem count]  > 50) {
-            [node removeFromParent];
-            [touchDrawArrayAllOfThem removeAllObjects];
-        }
-        
+//        
         
     }]; }
 
