@@ -34,16 +34,27 @@
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
         
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"Spaceship"];
+        NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
         
-        sprite.position = location;
         
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [sprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:sprite];
     }
+}
+
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    for (UITouch *touch in touches) {
+        CGPoint location = [touch locationInNode:self];
+        
+        NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
+        
+        
+    }
+
+}
+
+-(void) drawSmallSquareInLocation: (CGPoint) location{
+    
+    
 }
 
 -(void)update:(CFTimeInterval)currentTime {
