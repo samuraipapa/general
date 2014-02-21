@@ -8,22 +8,28 @@
 
 #import "MyScene.h"
 
-@implementation MyScene
+@implementation MyScene{
+    NSMutableArray* touchDrawArray;
+}
+
+
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
-        
-        self.backgroundColor = [SKColor colorWithRed:0.15 green:0.15 blue:0.3 alpha:1.0];
         
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         
         myLabel.text = @"Hello, World!";
         myLabel.fontSize = 30;
         myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                       CGRectGetMidY(self.frame));
+                                       CGRectGetMinY(self.frame));
         
-        [self addChild:myLabel];
+        
+        
+
+        
+        
     }
     return self;
 }
@@ -35,6 +41,8 @@
         CGPoint location = [touch locationInNode:self];
         
         NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
+
+        touchDrawArray  = [@[[NSValue valueWithCGPoint:location]] mutableCopy];
         
         
     }
@@ -44,16 +52,36 @@
     
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
+     
         
-        NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
+        [touchDrawArray addObject:[NSValue valueWithCGPoint:location]];
         
+        
+        
+   //     NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
+   //     [self drawSmallSquareInLocation:location];
         
     }
 
 }
 
--(void) drawSmallSquareInLocation: (CGPoint) location{
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event  {
     
+    //for (NSString *person in touchDrawArray) {
+     //   NSLog(@"element say %@", person);
+        for (NSValue* myPoint in touchDrawArray) {
+     //       NSLog(@"myPoint: %@",myPoint  );
+            [self drawSmallSquareInLocation:[myPoint CGPointValue]];
+      //  }
+    }
+}
+
+-(void) drawSmallSquareInLocation: (CGPoint) location{
+    SKSpriteNode *smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(5, 5)];
+    [smallSquare setPosition:location];
+    [self addChild:smallSquare];
+
+ 
     
 }
 
