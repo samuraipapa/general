@@ -9,9 +9,13 @@
 #import "MyScene.h"
 
 @implementation MyScene{
-    NSMutableArray* touchDrawArray;
-    NSMutableArray* touchDrawArrayAllOfThem;
+//    NSMutableArray* touchDrawArray;
+//    NSMutableArray* touchDrawArrayAllOfThem;
+    SKSpriteNode *squareBig1;
+    SKSpriteNode *squareBig2;
     SKSpriteNode *smallSquare;
+
+    
     SKPhysicsJointLimit* myJointLimit;
 }
 
@@ -28,7 +32,7 @@
         /* Setup your scene here */
  
         [self createSceneContents];
-        touchDrawArrayAllOfThem = [@[[NSValue valueWithCGPoint:CGPointMake(0, 0)]] mutableCopy];
+//        touchDrawArrayAllOfThem = [@[[NSValue valueWithCGPoint:CGPointMake(0, 0)]] mutableCopy];
 
         
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -47,6 +51,8 @@
     return self;
 }
 
+
+
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     /* Called when a touch begins */
     
@@ -55,7 +61,9 @@
         
         NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
 
-        touchDrawArray  = [@[[NSValue valueWithCGPoint:location]] mutableCopy];
+        [self drawBigSquare1InLocation:location];
+        
+      //  touchDrawArray  = [@[[NSValue valueWithCGPoint:location]] mutableCopy];
       
         
     }
@@ -66,9 +74,10 @@
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
      
+        [self drawSmallSquareInLocation:location];
         
-        [touchDrawArray addObject:[NSValue valueWithCGPoint:location]];
-        [touchDrawArrayAllOfThem addObject:[NSValue valueWithCGPoint:location]];
+    //    [touchDrawArray addObject:[NSValue valueWithCGPoint:location]];
+    //    [touchDrawArrayAllOfThem addObject:[NSValue valueWithCGPoint:location]];
         
         
         
@@ -81,16 +90,30 @@
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event  {
     
-        for (NSValue* myPoint in touchDrawArray) {
-            [self drawSmallJointedSquareInLocation:[myPoint CGPointValue]];
+    for (UITouch* touch in touches) {
+        CGPoint location = [touch locationInNode:self];
+       [self drawBigSquare2InLocation:location];
     }
-//    [touchDrawArrayAllOfThem addObjectsFromArray:touchDrawArray];
 
 }
+
+-(void) drawBigSquare1InLocation: (CGPoint) location{
+    squareBig1 = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(50, 50)];
+    [smallSquare setPosition:location];
+    [self addChild:smallSquare];
+}
+
+-(void) drawBigSquare2InLocation: (CGPoint) location{
+    squareBig2 = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(50, 50)];
+    [smallSquare setPosition:location];
+    [self addChild:smallSquare];
+}
+
 
 -(void) drawSmallSquareInLocation: (CGPoint) location{
     smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(5, 5)];
     [smallSquare setPosition:location];
+    [smallSquare setColor:[SKColor orangeColor]];
     [self addChild:smallSquare];
 }
 
