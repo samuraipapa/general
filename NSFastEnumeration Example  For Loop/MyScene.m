@@ -10,13 +10,26 @@
 
 @implementation MyScene{
     NSMutableArray* touchDrawArray;
+    NSMutableArray* touchDrawArrayAllOfThem;
+    SKSpriteNode *smallSquare;
+    SKPhysicsJointLimit* myJointLimit;
 }
 
 
+- (void) createSceneContents
+{
+    self.backgroundColor = [SKColor blackColor];
+    self.scaleMode = SKSceneScaleModeAspectFit;
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+}
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+ 
+        [self createSceneContents];
+        touchDrawArrayAllOfThem = [@[[NSValue valueWithCGPoint:CGPointMake(0, 0)]] mutableCopy];
+
         
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         
@@ -43,7 +56,7 @@
         NSLog(@"touch locationInNode: %f x %f",location.x, location.y);
 
         touchDrawArray  = [@[[NSValue valueWithCGPoint:location]] mutableCopy];
-        
+      
         
     }
 }
@@ -55,6 +68,7 @@
      
         
         [touchDrawArray addObject:[NSValue valueWithCGPoint:location]];
+        [touchDrawArrayAllOfThem addObject:[NSValue valueWithCGPoint:location]];
         
         
         
@@ -67,23 +81,49 @@
 
 -(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event  {
     
-    //for (NSString *person in touchDrawArray) {
-     //   NSLog(@"element say %@", person);
         for (NSValue* myPoint in touchDrawArray) {
-     //       NSLog(@"myPoint: %@",myPoint  );
-            [self drawSmallSquareInLocation:[myPoint CGPointValue]];
-      //  }
+            [self drawSmallJointedSquareInLocation:[myPoint CGPointValue]];
     }
+//    [touchDrawArrayAllOfThem addObjectsFromArray:touchDrawArray];
+
 }
 
 -(void) drawSmallSquareInLocation: (CGPoint) location{
-    SKSpriteNode *smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(5, 5)];
+    smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(5, 5)];
     [smallSquare setPosition:location];
     [self addChild:smallSquare];
-
- 
-    
 }
+
+
+-(void) drawSmallJointedSquareInLocation: (CGPoint) location{
+    smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(5, 5)];
+    [smallSquare setPosition:location];
+    [smallSquare setName:@"squareName"];
+    smallSquare.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:smallSquare.size];
+    
+    
+    
+//    SKPhysicsJointLimit * myJointLimit = [SKPhysicsJointLimit jointWithBodyA: bodyB:<#(SKPhysicsBody *)#> anchorA:<#(CGPoint)#> anchorB:<#(CGPoint)#>
+    [self addChild:smallSquare];
+}
+
+-(void)didSimulatePhysics
+{
+    [self enumerateChildNodesWithName:@"squareName" usingBlock:^(SKNode *node, BOOL *stop) {
+//        if (node.position.y < 0){
+//            [node removeFromParent];
+//        }
+    //    NSLog(@"%i",[touchDrawArray count]);
+        NSLog(@"%i",[touchDrawArrayAllOfThem count]);
+        
+        if ([touchDrawArrayAllOfThem count]  > 50) {
+            [node removeFromParent];
+            [touchDrawArrayAllOfThem removeAllObjects];
+        }
+        
+        
+    }]; }
+
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
