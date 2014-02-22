@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		FC26550018B912F7006441D5 /* pling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FC2654FF18B912F7006441D5 /* pling.mp3 */; };
+		FC26550218B9168F006441D5 /* Ting.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FC26550118B9168F006441D5 /* Ting.mp3 */; };
+		FC26550418B916CB006441D5 /* Pop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FC26550318B916CB006441D5 /* Pop.mp3 */; };
 		FCBBA3DD18B7A69900351148 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBA3DC18B7A69900351148 /* Foundation.framework */; };
 		FCBBA3DF18B7A69900351148 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBA3DE18B7A69900351148 /* CoreGraphics.framework */; };
 		FCBBA3E118B7A69900351148 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBA3E018B7A69900351148 /* UIKit.framework */; };
@@ -39,6 +41,8 @@
 
 /* Begin PBXFileReference section */
 		FC2654FF18B912F7006441D5 /* pling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pling.mp3; sourceTree = "<group>"; };
+		FC26550118B9168F006441D5 /* Ting.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Ting.mp3; sourceTree = "<group>"; };
+		FC26550318B916CB006441D5 /* Pop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Pop.mp3; sourceTree = "<group>"; };
 		FCBBA3D918B7A69900351148 /* NSFastEnumeration Example  For Loop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NSFastEnumeration Example  For Loop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBBA3DC18B7A69900351148 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCBBA3DE18B7A69900351148 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -131,7 +135,9 @@
 				FCBBA3F618B7A69900351148 /* MyScene.h */,
 				FCBBA3F718B7A69900351148 /* MyScene.m */,
 				FCBBA3F918B7A69900351148 /* Spaceship.png */,
+				FC26550118B9168F006441D5 /* Ting.mp3 */,
 				FCBBA3FB18B7A69900351148 /* Images.xcassets */,
+				FC26550318B916CB006441D5 /* Pop.mp3 */,
 				FC2654FF18B912F7006441D5 /* pling.mp3 */,
 				FCBBA3E518B7A69900351148 /* Supporting Files */,
 			);
@@ -243,6 +249,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FC26550418B916CB006441D5 /* Pop.mp3 in Resources */,
+				FC26550218B9168F006441D5 /* Ting.mp3 in Resources */,
 				FCBBA3E918B7A69900351148 /* InfoPlist.strings in Resources */,
 				FCBBA3FC18B7A69900351148 /* Images.xcassets in Resources */,
 				FCBBA3FA18B7A69900351148 /* Spaceship.png in Resources */,

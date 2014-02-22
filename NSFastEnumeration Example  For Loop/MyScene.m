@@ -123,18 +123,32 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
         firstBody = contact.bodyA;
         secondBody = contact.bodyB;
     } else {
-        firstBody = contact.bodyB;
+       firstBody = contact.bodyB;
         secondBody = contact.bodyA;
     }
+    
+
     // 3 react to the contact between ball and bottom
 //    if (firstBody.categoryBitMask == smallSquareCategory && secondBody.categoryBitMask == bigSquareCategory ) {
 
 
         if (firstBody.categoryBitMask == smallSquareCategory) {
-            [firstBody.node removeFromParent];
-
+        
+            NSLog(@"firstBody.categoryBitMask == smallSquareCategory");
             SKAction *sound = [SKAction playSoundFileNamed:@"pling.mp3" waitForCompletion:YES];
             [self runAction:sound];
+            [firstBody.node removeFromParent];
+        }
+
+        if (contact.bodyA.categoryBitMask == bigSquareCategory && contact.bodyB.categoryBitMask ==  bigSquareCategory){
+              NSLog(@"contact.bodyA.categoryBitMask == bigSquareCategory && contact.bodyB.categoryBitMask ==  bigSquareCategory");
+  
+                [secondBody.node setAlpha:(secondBody.node.alpha - 0.1)];
+                SKAction *sound = [SKAction playSoundFileNamed:@"pop.mp3" waitForCompletion:YES];
+                [self runAction:sound];
+                
+            }
+            
             
         //TODO: Replace the log statement with display of Game Over Scene
 
@@ -143,10 +157,6 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
         //make a sound.
         
         //remove from parent
-        
-        
-
-    }
 
 }
 
@@ -207,10 +217,15 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
 
 -(void)didSimulatePhysics
 {
-    [self enumerateChildNodesWithName:@"squareName" usingBlock:^(SKNode *node, BOOL *stop) {
-////        if (node.position.y < 0){
-////            [node removeFromParent];
-////        }
+    [self enumerateChildNodesWithName:@"bigSquareCategoryName" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.alpha < 0){
+            [node removeFromParent];
+        
+            SKAction *sound = [SKAction playSoundFileNamed:@"ting.mp3" waitForCompletion:YES];
+            [self runAction:sound];
+            
+        }
+        
 //    //    NSLog(@"%i",[touchDrawArray count]);
 //        NSLog(@"%i",[touchDrawArrayAllOfThem count]);
 //        
