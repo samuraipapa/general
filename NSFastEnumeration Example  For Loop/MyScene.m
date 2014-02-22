@@ -83,6 +83,7 @@
 
 
 
+
 -(void) drawBigSquare1InLocation: (CGPoint) location{
     squareBig1 = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(50, 50)];
     [squareBig1 setPosition:location];
