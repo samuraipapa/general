@@ -115,30 +115,25 @@ static const uint32_t outScreenCategory = 0x1 << 2;  // 000000000000000000000000
 
 -(void) didBeginContact:(SKPhysicsContact *)contact{
     
-    NSLog(@"didBeginContact");
     
     // 1 Create local variables for two physics bodies
     SKPhysicsBody* firstBody;
     SKPhysicsBody* secondBody;
-    // 2 Assign the two physics bodies so that the one with the lower category is always stored in firstBody
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
-        
-        NSLog(@" <<< ");
-        firstBody = contact.bodyA;
-        secondBody = contact.bodyB;
-    } else {
-        NSLog(@" else ");
-
-        firstBody = contact.bodyB;
-        secondBody = contact.bodyA;
-    }
     
-    if (contact.bodyA.categoryBitMask == contact.bodyB.categoryBitMask) {
         firstBody = contact.bodyA;
         secondBody = contact.bodyB;
-        NSLog(@" === ");
 
-    }
+    
+    NSString* firstBodyName = [NSString stringWithFormat:@"%@",firstBody.node.name];
+    NSString* secondBodyName = [NSString stringWithFormat:@"%@",secondBody.node.name];
+    NSLog(@"firstBody:%@  secondBody: %@", firstBodyName,secondBodyName);
+    
+//    if (contact.bodyA.categoryBitMask == contact.bodyB.categoryBitMask) {
+//        firstBody = contact.bodyA;
+//        secondBody = contact.bodyB;
+//        NSLog(@" === ");
+//
+//    }
     
 
     // 3 react to the contact between ball and bottom
@@ -153,18 +148,19 @@ static const uint32_t outScreenCategory = 0x1 << 2;  // 000000000000000000000000
             [firstBody.node removeFromParent];
         }
 
-        if (contact.bodyA.categoryBitMask == bigSquareCategory || contact.bodyB.categoryBitMask ==  bigSquareCategory){
-    
-
-              NSLog(@"firstBody.categoryBitMask == bigSquareCategory");
-
-
+        if (firstBody.categoryBitMask == bigSquareCategory ){
+                NSLog(@"firstBody.categoryBitMask == bigSquareCategory");
                 SKAction *sound = [SKAction playSoundFileNamed:@"Ting.mp3" waitForCompletion:YES];
                 [self runAction:sound];
-                
             }
+
+    if (secondBody.categoryBitMask == bigSquareCategory ){
+        NSLog(@"secondBody.categoryBitMask == bigSquareCategory");
+        SKAction *sound = [SKAction playSoundFileNamed:@"Ting.mp3" waitForCompletion:YES];
+        [self runAction:sound];
+    }
     
-            
+    
 
 
 }
