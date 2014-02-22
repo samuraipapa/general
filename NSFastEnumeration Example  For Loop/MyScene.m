@@ -36,6 +36,8 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     self.scaleMode = SKSceneScaleModeAspectFit;
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
     [self.physicsWorld setGravity:CGVectorMake(0, -2)];
+
+
     
     
     
@@ -52,10 +54,13 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
 
 -(id)initWithSize:(CGSize)size {    
     if (self = [super initWithSize:size]) {
- 
+        
+
         [self createSceneContents];
 //        touchDrawArrayAllOfThem = [@[[NSValue valueWithCGPoint:CGPointMake(0, 0)]] mutableCopy];
-
+        self.physicsWorld.contactDelegate = self;
+        
+        
         
         SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         
@@ -106,6 +111,46 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
 }
 
 
+-(void) didBeginContact:(SKPhysicsContact *)contact{
+    
+    NSLog(@"didBeginContact");
+    
+    // 1 Create local variables for two physics bodies
+    SKPhysicsBody* firstBody;
+    SKPhysicsBody* secondBody;
+    // 2 Assign the two physics bodies so that the one with the lower category is always stored in firstBody
+    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+    } else {
+        firstBody = contact.bodyB;
+        secondBody = contact.bodyA;
+    }
+    // 3 react to the contact between ball and bottom
+    if (firstBody.categoryBitMask == smallSquareCategory && secondBody.categoryBitMask == bigSquareCategory ) {
+        //TODO: Replace the log statement with display of Game Over Scene
+
+        //make label say something.
+        
+        //make a sound.
+        
+        //remove from parent
+        
+        [firstBody.node removeFromParent];
+        
+//        GameOverScene* gameOverScene = [[GameOverScene alloc] initWithSize:self.frame.size playerWon:NO];
+//        [self.view presentScene:gameOverScene];
+//    }
+//    if (firstBody.categoryBitMask == ballCategory && secondBody.categoryBitMask == blockCategory) {
+//        [secondBody.node removeFromParent];
+//        if ([self isGameWon]) {
+//            GameOverScene* gameWonScene = [[GameOverScene alloc] initWithSize:self.frame.size playerWon:YES];
+//            [self.view presentScene:gameWonScene];
+//        }
+    }
+
+}
+
 
 
 -(void) drawBigSquare1InLocation: (CGPoint) location{
@@ -130,9 +175,9 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     
     [self addChild:squareBig2];
     
-    myJointLimit = [SKPhysicsJointLimit jointWithBodyA:squareBig1.physicsBody bodyB:squareBig2.physicsBody anchorA:squareBig1.position anchorB:squareBig2.position  ];
+ //   myJointLimit = [SKPhysicsJointLimit jointWithBodyA:squareBig1.physicsBody bodyB:squareBig2.physicsBody anchorA:squareBig1.position anchorB:squareBig2.position  ];
     
-    [self.physicsWorld addJoint:myJointLimit];
+ //   [self.physicsWorld addJoint:myJointLimit];
 }
 
 
