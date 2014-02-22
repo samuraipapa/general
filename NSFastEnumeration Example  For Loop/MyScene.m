@@ -129,7 +129,7 @@ static const uint32_t outScreenCategory = 0x1 << 2;  // 000000000000000000000000
     NSLog(@"firstBody:%@  secondBody: %@", firstBodyName,secondBodyName);
 
         if (firstBody.categoryBitMask == smallSquareCategory    ) {
-            SKAction *sound = [SKAction playSoundFileNamed:@"Ting.mp3" waitForCompletion:YES];
+            SKAction *sound = [SKAction playSoundFileNamed:@"pling.mp3" waitForCompletion:YES];
             [self runAction:sound];
             [firstBody.node removeFromParent];
         }
