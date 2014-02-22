@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FC26550018B912F7006441D5 /* pling.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FC2654FF18B912F7006441D5 /* pling.mp3 */; };
 		FCBBA3DD18B7A69900351148 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBA3DC18B7A69900351148 /* Foundation.framework */; };
 		FCBBA3DF18B7A69900351148 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBA3DE18B7A69900351148 /* CoreGraphics.framework */; };
 		FCBBA3E118B7A69900351148 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCBBA3E018B7A69900351148 /* UIKit.framework */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FC2654FF18B912F7006441D5 /* pling.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pling.mp3; sourceTree = "<group>"; };
 		FCBBA3D918B7A69900351148 /* NSFastEnumeration Example  For Loop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "NSFastEnumeration Example  For Loop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCBBA3DC18B7A69900351148 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FCBBA3DE18B7A69900351148 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -130,6 +132,7 @@
 				FCBBA3F718B7A69900351148 /* MyScene.m */,
 				FCBBA3F918B7A69900351148 /* Spaceship.png */,
 				FCBBA3FB18B7A69900351148 /* Images.xcassets */,
+				FC2654FF18B912F7006441D5 /* pling.mp3 */,
 				FCBBA3E518B7A69900351148 /* Supporting Files */,
 			);
 			path = "NSFastEnumeration Example  For Loop";
@@ -243,6 +246,7 @@
 				FCBBA3E918B7A69900351148 /* InfoPlist.strings in Resources */,
 				FCBBA3FC18B7A69900351148 /* Images.xcassets in Resources */,
 				FCBBA3FA18B7A69900351148 /* Spaceship.png in Resources */,
+				FC26550018B912F7006441D5 /* pling.mp3 in Resources */,
 				FCBBA3F218B7A69900351148 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,6 +480,7 @@
 				FCBBA41418B7A69A00351148 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FCBBA41518B7A69A00351148 /* Build configuration list for PBXNativeTarget "NSFastEnumeration Example  For LoopTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +489,7 @@
 				FCBBA41718B7A69A00351148 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -127,7 +127,15 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
         secondBody = contact.bodyA;
     }
     // 3 react to the contact between ball and bottom
-    if (firstBody.categoryBitMask == smallSquareCategory && secondBody.categoryBitMask == bigSquareCategory ) {
+//    if (firstBody.categoryBitMask == smallSquareCategory && secondBody.categoryBitMask == bigSquareCategory ) {
+
+
+        if (firstBody.categoryBitMask == smallSquareCategory) {
+            [firstBody.node removeFromParent];
+
+            SKAction *sound = [SKAction playSoundFileNamed:@"pling.mp3" waitForCompletion:YES];
+            [self runAction:sound];
+            
         //TODO: Replace the log statement with display of Game Over Scene
 
         //make label say something.
@@ -136,17 +144,8 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
         
         //remove from parent
         
-        [firstBody.node removeFromParent];
         
-//        GameOverScene* gameOverScene = [[GameOverScene alloc] initWithSize:self.frame.size playerWon:NO];
-//        [self.view presentScene:gameOverScene];
-//    }
-//    if (firstBody.categoryBitMask == ballCategory && secondBody.categoryBitMask == blockCategory) {
-//        [secondBody.node removeFromParent];
-//        if ([self isGameWon]) {
-//            GameOverScene* gameWonScene = [[GameOverScene alloc] initWithSize:self.frame.size playerWon:YES];
-//            [self.view presentScene:gameWonScene];
-//        }
+
     }
 
 }
@@ -159,6 +158,7 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     squareBig1.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:squareBig1.size];
     squareBig1.name = bigSquareCategoryName;
     squareBig1.physicsBody.categoryBitMask = bigSquareCategory;
+    squareBig1.physicsBody.contactTestBitMask = smallSquareCategory;
     
     [self addChild:squareBig1];
     
@@ -169,8 +169,9 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     squareBig2 = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(50, 50)];
     [squareBig2 setPosition:location];
     squareBig2.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:squareBig2.size];
-    squareBig1.name = bigSquareCategoryName;
-    squareBig1.physicsBody.categoryBitMask = bigSquareCategory;
+    squareBig2.name = bigSquareCategoryName;
+    squareBig2.physicsBody.categoryBitMask = bigSquareCategory;
+    squareBig2.physicsBody.contactTestBitMask = smallSquareCategory;
     
     
     [self addChild:squareBig2];
@@ -182,13 +183,16 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
 
 
 -(void) drawSmallSquareInLocation: (CGPoint) location{
-    smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(5, 5)];
+    smallSquare = [SKSpriteNode spriteNodeWithColor:[SKColor yellowColor] size:CGSizeMake(15, 15)];
     [smallSquare setPosition:location];
     [smallSquare setColor:[SKColor orangeColor]];
     
     smallSquare.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:smallSquare.size];
     smallSquare.name = smallSquareCategoryName;
     smallSquare.physicsBody.categoryBitMask = smallSquareCategory;
+
+    smallSquare.physicsBody.categoryBitMask = smallSquareCategory;
+  //  smallSquare.physicsBody.contactTestBitMask = smallSquareCategory;
 
     
     [self addChild:smallSquare];
