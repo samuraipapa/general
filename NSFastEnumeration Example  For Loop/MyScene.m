@@ -10,12 +10,12 @@
 
 static NSString* smallSquareCategoryName = @"smallSquare";
 static NSString* bigSquareCategoryName = @"bigSquare";
-//static NSString* blockCategoryName = @"block";
+static NSString* outScreenCategoryName = @"outScreen";
 //static NSString* blockNodeCategoryName = @"blockNode";
 
 static const uint32_t smallSquareCategory  = 0x1 << 0;  // 00000000000000000000000000000001
 static const uint32_t bigSquareCategory = 0x1 << 1; // 00000000000000000000000000000010
-//static const uint32_t blockCategory = 0x1 << 2;  // 00000000000000000000000000000100
+static const uint32_t outScreenCategory = 0x1 << 2;  // 00000000000000000000000000000100
 //static const uint32_t paddleCategory = 0x1 << 3; // 00000000000000000000000000001000
 
 
@@ -35,6 +35,8 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     self.backgroundColor = [SKColor blackColor];
     self.scaleMode = SKSceneScaleModeAspectFit;
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+ //   self.name = outScreenCategoryName;
+   // self.physicsBody.categoryBitMask = outScreenCategory;
     [self.physicsWorld setGravity:CGVectorMake(0, -2)];
 
 
@@ -96,7 +98,7 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
      
-        [self drawSmallSquareInLocation:location];
+  //      [self drawSmallSquareInLocation:location];
     }
 }
 
@@ -120,11 +122,22 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     SKPhysicsBody* secondBody;
     // 2 Assign the two physics bodies so that the one with the lower category is always stored in firstBody
     if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
+        
+        NSLog(@" <<< ");
         firstBody = contact.bodyA;
         secondBody = contact.bodyB;
     } else {
-       firstBody = contact.bodyB;
+        NSLog(@" else ");
+
+        firstBody = contact.bodyB;
         secondBody = contact.bodyA;
+    }
+    
+    if (contact.bodyA.categoryBitMask == contact.bodyB.categoryBitMask) {
+        firstBody = contact.bodyA;
+        secondBody = contact.bodyB;
+        NSLog(@" === ");
+
     }
     
 
@@ -140,23 +153,19 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
             [firstBody.node removeFromParent];
         }
 
-        if (contact.bodyA.categoryBitMask == bigSquareCategory && contact.bodyB.categoryBitMask ==  bigSquareCategory){
-              NSLog(@"contact.bodyA.categoryBitMask == bigSquareCategory && contact.bodyB.categoryBitMask ==  bigSquareCategory");
-  
-                [secondBody.node setAlpha:(secondBody.node.alpha - 0.1)];
-                SKAction *sound = [SKAction playSoundFileNamed:@"pop.mp3" waitForCompletion:YES];
+        if (contact.bodyA.categoryBitMask == bigSquareCategory || contact.bodyB.categoryBitMask ==  bigSquareCategory){
+    
+
+              NSLog(@"firstBody.categoryBitMask == bigSquareCategory");
+
+
+                SKAction *sound = [SKAction playSoundFileNamed:@"Ting.mp3" waitForCompletion:YES];
                 [self runAction:sound];
                 
             }
+    
             
-            
-        //TODO: Replace the log statement with display of Game Over Scene
 
-        //make label say something.
-        
-        //make a sound.
-        
-        //remove from parent
 
 }
 
@@ -169,6 +178,7 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     squareBig1.name = bigSquareCategoryName;
     squareBig1.physicsBody.categoryBitMask = bigSquareCategory;
     squareBig1.physicsBody.contactTestBitMask = smallSquareCategory;
+  //  squareBig1.physicsBody.usesPreciseCollisionDetection = YES;
     
     [self addChild:squareBig1];
     
@@ -182,6 +192,7 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     squareBig2.name = bigSquareCategoryName;
     squareBig2.physicsBody.categoryBitMask = bigSquareCategory;
     squareBig2.physicsBody.contactTestBitMask = smallSquareCategory;
+   // squareBig2.physicsBody.usesPreciseCollisionDetection = YES;
     
     
     [self addChild:squareBig2];
@@ -200,8 +211,8 @@ static const uint32_t bigSquareCategory = 0x1 << 1; // 0000000000000000000000000
     smallSquare.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:smallSquare.size];
     smallSquare.name = smallSquareCategoryName;
     smallSquare.physicsBody.categoryBitMask = smallSquareCategory;
-
-    smallSquare.physicsBody.categoryBitMask = smallSquareCategory;
+   // smallSquare.physicsBody.usesPreciseCollisionDetection = YES;
+    
   //  smallSquare.physicsBody.contactTestBitMask = smallSquareCategory;
 
     
